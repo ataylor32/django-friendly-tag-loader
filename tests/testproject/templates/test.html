@@ -1,0 +1,17 @@
+{% load friendly_loader %}
+{% friendly_load error_tags %}
+{% friendly_load webdesign %}
+
+{% if_has_tag lorem %}
+    <p>SUCCESS</p>
+    {% lorem %}
+{% else %}
+    <p>FAIL</p>
+{% endif_has_tag %}
+
+{% if_has_tag fail %}
+    <p>FAIL</p>
+    {% fail %}
+{% else %}
+    <p>SUCCESS</p>
+{% endif_has_tag %}
