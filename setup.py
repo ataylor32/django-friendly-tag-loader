@@ -17,7 +17,7 @@ setup(
     author_email='jaap@eight.nl',
     url='https://bitbucket.org/jaap3/django-friendly-tag-loader/',
     package_dir={'': 'src'},
-    packages=['friendlytagloader',],
+    packages=['friendlytagloader', 'friendlytagloader.templatetags'],
     license='MIT',
     classifiers=[
       'Development Status :: 2 - Pre-Alpha',
@@ -29,7 +29,7 @@ setup(
       'Programming Language :: Python',
     ],
     install_requires=[],
-    tests_require=['Django>=1.2', 'unittest2>=0.5.1'],
+    tests_require=['Django>=1.2',],
     test_suite='tests.runtests.runtests',
     zip_safe=False,
 )

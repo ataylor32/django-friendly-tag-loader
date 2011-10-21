@@ -15,3 +15,13 @@
 {% else %}
     <p>SUCCESS</p>
 {% endif_has_tag %}
+
+{% ifnot_has_tag now nonexisting_tag %}
+    {% now "Y" %}
+{% endifnot_has_tag %}
+
+{% if_has_tag now %}
+  {% now "Y" %}
+{% else %}
+  FAIL
+{% endif_has_tag %}
