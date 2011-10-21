@@ -3,7 +3,7 @@ from os.path import join, dirname
 from setuptools import setup
 
 
-version = '0.1dev'
+version = '1.0'
 read = lambda *rnames: unicode(codecs.open(join(dirname(__file__), *rnames),
                                            encoding='utf-8').read()
                               ).strip()
@@ -20,7 +20,7 @@ setup(
     packages=['friendlytagloader', 'friendlytagloader.templatetags'],
     license='MIT',
     classifiers=[
-      'Development Status :: 2 - Pre-Alpha',
+      'Development Status :: 5 - Production/Stable',
       'Environment :: Web Environment',
       'Framework :: Django',
       'Intended Audience :: Developers',
