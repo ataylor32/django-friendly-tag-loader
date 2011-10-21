@@ -23,8 +23,8 @@ class FriendlyLoadingTest(TestCase):
 
     def test_can_load_non_existing_taglib_using_friendly_load(self):
         template = '{% load friendly_loader %}{% friendly_load error_tags %}'
-        self.assertIsInstance(
-            Template(template), Template, 'Expected template to initialize')
+        self.assertTrue(isinstance(Template(template), Template),
+            'Expected template to initialize')
 
     def test_can_load_existing_taglib_using_friendly_load(self):
         template = '{% load friendly_loader %}{% friendly_load webdesign %}'
@@ -33,7 +33,6 @@ class FriendlyLoadingTest(TestCase):
         parser.parse()
         self.assertTrue('lorem' in parser.tags,
             'Expected webdesign taglib to load and provide the lorem tag')
-
 
     def test_can_load_both_nonexisting_and_existing_taglib_using_friendly_load(self):
         template = '{% load friendly_loader %}{% friendly_load error_tags webdesign %}'
@@ -45,6 +44,12 @@ class FriendlyLoadingTest(TestCase):
 
 
 class HasTagTest(TestCase):
+
+    def test_must_have_arguments(self):
+        template = '''
+        {% load friendly_loader %}
+        {% if_has_tag %}FAIL{% endif_has_tag %}'''
+        self.assertRaises(TemplateSyntaxError, _render_template, template)
 
     def test_can_test_builtins(self):
         template = '''
@@ -99,8 +104,21 @@ class HasTagTest(TestCase):
         self.assertEqual('SUCCESS', _render_template(template),
                          'Expected template to render SUCCESS')
 
+    def test_not_having_tag_renders_nothing(self):
+        template = '''
+        {% load friendly_loader %}
+        {% if_has_tag fail %}{% fail %}{% endif_has_tag %}'''
+        self.assertEqual('', _render_template(template),
+                         'Expected template to render nothing')
+
 
 class NotHasTagTest(TestCase):
+
+    def test_must_have_arguments(self):
+        template = '''
+        {% load friendly_loader %}
+        {% ifnot_has_tag %}FAIL{% endifnot_has_tag %}'''
+        self.assertRaises(TemplateSyntaxError, _render_template, template)
 
     def test_can_test_builtins(self):
         template = '''
@@ -171,3 +189,11 @@ class NotHasTagTest(TestCase):
         {% endifnot_has_tag %}'''
         self.assertEqual('SUCCESS', _render_template(template),
                          'Expected template to render SUCCESS')
+
+    def test_having_tag_renders_nothing(self):
+        template = '''
+        {% load friendly_loader %}
+        {% ifnot_has_tag now %}{% now 'Y' %}{% endifnot_has_tag %}'''
+        self.assertEqual('', _render_template(template),
+                         'Expected template to render nothing')
+
