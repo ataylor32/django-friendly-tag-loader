@@ -4,18 +4,18 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = join(dirname(__file__), 'db', 'djangofriendlytemplatetagloader.db')
+DATABASE_NAME = join(dirname(__file__), 'db', 'friendlytagloader.db')
 
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.sqlite3',
-        "NAME": join(dirname(__file__), 'db', 'djangofriendlytemplatetagloader.db')
+        "NAME": join(dirname(__file__), 'db', 'friendlytagloader.db')
     }
 }
 
 INSTALLED_APPS = (
     'testproject',
-    'friendlytemplatetagloader',
+    'friendlytagloader',
     'django.contrib.webdesign',
 )
 

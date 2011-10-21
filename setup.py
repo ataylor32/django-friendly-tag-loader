@@ -9,18 +9,18 @@ read = lambda *rnames: unicode(codecs.open(join(dirname(__file__), *rnames),
                               ).strip()
 
 setup(
-    name='django-friendly-templatetag-loader',
+    name='django-friendly-tag-loader',
     version=version,
     description='Want to optionally use a template tag library? Use this!',
     long_description='\n\n'.join((read('README'), read('CHANGES'),)),
     author='Jaap Roes (Eight Media)',
     author_email='jaap@eight.nl',
-    url='https://bitbucket.org/jaap3/django-friendly-templatetag-loader/',
+    url='https://bitbucket.org/jaap3/django-friendly-tag-loader/',
     package_dir={'': 'src'},
-    packages=['friendlytemplatetagloader',],
+    packages=['friendlytagloader',],
     license='MIT',
     classifiers=[
-      'Development Status :: 5 - Production/Stable',
+      'Development Status :: 2 - Pre-Alpha',
       'Environment :: Web Environment',
       'Framework :: Django',
       'Intended Audience :: Developers',

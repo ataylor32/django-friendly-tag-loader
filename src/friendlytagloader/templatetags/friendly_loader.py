@@ -13,6 +13,7 @@ def friendly_load(parser, token):
         pass
     return LoadNode
 
+
 @register.tag
 def if_has_tag(parser, token):
     parser.skip_past('endif_has_tag')
