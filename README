@@ -46,13 +46,13 @@ In the case of ``if_has_tag`` this means that all given tags should be
 available, so this will render nothing even though ``now`` is a built-in tag::
 
   {% if_has_tag now nonexisting_tag %}
-    {% now %}
+    {% now 'Y' %}
   {% endif_has_tag %}
 
 The ``ifnot_has_tag`` condition will trigger if any of the given tags is
-unavailable. For example this still renders the current year since
-``nonexisting_tag`` is unavailable and ``now`` is a built-in tag::
+unavailable. For example this will render the message since, even though
+``now`` is a built-in tag, ``nonexisting_tag`` is not available::
 
   {% ifnot_has_tag now nonexisting_tag %}
-    {% now %}
+    Some tags are unavailable.
   {% endifnot_has_tag %}
