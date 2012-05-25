@@ -80,12 +80,21 @@ def do_if_has_tag(parser, token, negate=False):
         while parser.tokens:
             token = parser.next_token()
             if token.token_type == TOKEN_BLOCK and token.contents == end_tag:
-                return IfNode(Literal(has_tag), nodelist_true, CommentNode())
+                try:
+                    return IfNode([(Literal(has_tag), nodelist_true),
+                                   (None, CommentNode())])
+                except TypeError:  # < 1.4
+                    return IfNode(Literal(has_tag), nodelist_true,
+                                  CommentNode())
             elif token.token_type == TOKEN_BLOCK and token.contents == 'else':
                 break
         nodelist_false = parser.parse((end_tag,))
         token = parser.next_token()
-    return IfNode(Literal(has_tag), nodelist_true, nodelist_false)
+    try:
+        return IfNode([(Literal(has_tag), nodelist_true),
+                       (None, nodelist_false)])
+    except TypeError:  # < 1.4
+        return IfNode(Literal(has_tag), nodelist_true, nodelist_false)
 
 
 @register.tag
