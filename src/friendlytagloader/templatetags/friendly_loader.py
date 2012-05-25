@@ -81,7 +81,7 @@ def do_if_has_tag(parser, token, negate=False):
             token = parser.next_token()
             if token.token_type == TOKEN_BLOCK and token.contents == end_tag:
                 try:
-                    return IfNode([(Literal(has_tag), nodelist_true),
+                    return IfNode([(Literal(has_tag), CommentNode()),
                                    (None, CommentNode())])
                 except TypeError:  # < 1.4
                     return IfNode(Literal(has_tag), nodelist_true,
