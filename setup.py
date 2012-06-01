@@ -3,7 +3,7 @@ from os.path import join, dirname
 from setuptools import setup
 
 
-version = '1.1'
+version = '1.2.dev0'
 read = lambda *rnames: unicode(codecs.open(join(dirname(__file__), *rnames),
                                            encoding='utf-8').read()
                               ).strip()
