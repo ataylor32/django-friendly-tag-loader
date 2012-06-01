@@ -70,7 +70,7 @@ def do_if_has_tag(parser, token, negate=False):
     end_tag = 'end%s' % bits[0]
     has_tag = all([tag in parser.tags for tag in bits[1:]])
     has_tag = (not negate and has_tag) or (negate and not has_tag)
-    nodelist_true = nodelist_false = None
+    nodelist_true = nodelist_false = CommentNode()
     if has_tag:
         nodelist_true = parser.parse(('else', end_tag))
         token = parser.next_token()
@@ -81,11 +81,11 @@ def do_if_has_tag(parser, token, negate=False):
             token = parser.next_token()
             if token.token_type == TOKEN_BLOCK and token.contents == end_tag:
                 try:
-                    return IfNode([(Literal(has_tag), CommentNode()),
-                                   (None, CommentNode())])
+                    return IfNode([(Literal(has_tag), nodelist_true),
+                                   (None, nodelist_false)])
                 except TypeError:  # < 1.4
                     return IfNode(Literal(has_tag), nodelist_true,
-                                  CommentNode())
+                                                    nodelist_false)
             elif token.token_type == TOKEN_BLOCK and token.contents == 'else':
                 break
         nodelist_false = parser.parse((end_tag,))
