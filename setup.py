@@ -4,9 +4,8 @@ from setuptools import setup
 
 
 version = '1.2.dev0'
-read = lambda *rnames: unicode(codecs.open(join(dirname(__file__), *rnames),
-                                           encoding='utf-8').read()
-                              ).strip()
+read = lambda *names: codecs.open(join(dirname(__file__), *names),
+                                  encoding='utf-8').read().strip()
 
 setup(
     name='django-friendly-tag-loader',
