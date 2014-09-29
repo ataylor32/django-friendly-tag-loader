@@ -1,7 +1,7 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.shortcuts import render
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'$', lambda request: render(request, 'test.html'))
-)
+]
