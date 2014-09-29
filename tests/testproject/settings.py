@@ -3,8 +3,14 @@ from os.path import dirname, join
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = join(dirname(__file__), 'db', 'friendlytagloader.db')
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
 
 DATABASES = {
     "default": {
@@ -20,7 +26,9 @@ INSTALLED_APPS = (
 )
 
 TEMPLATE_DIRS = (
-    join(dirname(__file__), 'templates')
+    join(dirname(__file__), 'templates'),
 )
 
 ROOT_URLCONF = 'testproject.urls'
+
+SECRET_KEY = 'AVx7Au7LXpdYTuqSUYaDGf4U'
