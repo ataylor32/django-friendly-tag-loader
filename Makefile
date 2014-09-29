@@ -1,8 +1,6 @@
-.PHONY : help init devserver tests\
-         coverage checkstyle readme\
-         clean fullclean
+.PHONY : help init devserver tests coverage checkstyle readme clean fullclean
 
-FILES       = build dist src/*.egg-info checkstyle.txt pylint.html README.html htmlcov/ .coverage
+FILES       = build dist src/*.egg-info checkstyle.txt README.html htmlcov/ .coverage
 OTHER_FILES = .installed.cfg .tox bin develop-eggs eggs parts
 
 help:
@@ -50,9 +48,7 @@ checkstyle:
 	echo 'pyflakes' >> checkstyle.txt
 	echo '' >> checkstyle.txt
 	-bin/pyflakes src >> checkstyle.txt
-	-bin/pylint -f html > pylint.html
 	python -m webbrowser -t file://$(PWD)/checkstyle.txt
-	python -m webbrowser -t file://$(PWD)/pylint.html
 
 readme:
 	bin/rst2 html README > README.html
