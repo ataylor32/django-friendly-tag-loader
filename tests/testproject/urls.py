@@ -1,6 +1,7 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
+from django.shortcuts import render
 
 
 urlpatterns = patterns('',
-    url(r'$', 'django.views.generic.simple.direct_to_template', {'template': 'test.html'})
+    url(r'$', lambda request: render(request, 'test.html'))
 )
