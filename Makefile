@@ -36,9 +36,10 @@ devserver:
 	bin/manage runserver
 
 tests:
-	bin/python tests/runtests.py
+	bin/manage test testproject
+
 coverage:
-	bin/coverage run setup.py test
+	bin/coverage run bin/manage test testproject
 	bin/coverage html
 	python -m webbrowser -t file://$(PWD)/htmlcov/index.html
 

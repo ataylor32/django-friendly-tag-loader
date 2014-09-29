@@ -29,7 +29,5 @@ setup(
       'Programming Language :: Python',
     ],
     install_requires=[],
-    tests_require=['Django>=1.2',],
-    test_suite='tests.runtests.runtests',
     zip_safe=False,
 )
