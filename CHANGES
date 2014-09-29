@@ -4,7 +4,10 @@ Changes
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Dropped support for Django < 1.4
+- Verified Django support up to 1.7
+- Added Python 3 support
+- Support ``friendly_load tag from taglib`` syntax
 
 
 1.1 (2012-06-01)

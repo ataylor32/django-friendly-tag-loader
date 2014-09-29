@@ -37,7 +37,7 @@ tests:
 	bin/manage test testproject
 
 coverage:
-	bin/coverage run bin/manage test testproject
+	bin/coverage run --source src/friendlytagloader --branch bin/manage test testproject
 	bin/coverage html
 	python -m webbrowser -t file://$(PWD)/htmlcov/index.html
 

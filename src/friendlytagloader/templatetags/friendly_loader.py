@@ -1,7 +1,7 @@
 from django.template import (
     InvalidTemplateLibrary, Library, TOKEN_BLOCK,
     TemplateSyntaxError, get_library)
-from django.template.defaulttags import CommentNode, IfNode, LoadNode
+from django.template.defaulttags import CommentNode, IfNode, LoadNode, load
 from django.template.smartif import Literal
 
 register = Library()
@@ -31,12 +31,18 @@ def friendly_load(parser, token):
         {% endif_has_tag %}
     """
     bits = token.contents.split()
-    for taglib in bits[1:]:
+    if len(bits) >= 4 and bits[-2] == "from":
         try:
-            lib = get_library(taglib)
-            parser.add_library(lib)
-        except InvalidTemplateLibrary:
+            load(parser, token)
+        except TemplateSyntaxError:
             pass
+    else:
+        for taglib in bits[1:]:
+            try:
+                lib = get_library(taglib)
+                parser.add_library(lib)
+            except InvalidTemplateLibrary:
+                pass
     return LoadNode()
 
 

@@ -26,6 +26,8 @@ Usage
 
 Load some optional taglib ``{% friendly_load comments %}``
 
+Or load a specific tag ``{% friendly_load cycle from future %}``
+
 Conditionally use its tag::
 
   {% if_has_tag render_comment_list %}
