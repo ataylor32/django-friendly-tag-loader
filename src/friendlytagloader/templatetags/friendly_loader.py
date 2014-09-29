@@ -1,19 +1,19 @@
-from django.template import InvalidTemplateLibrary, Library, TOKEN_BLOCK, \
-    TemplateSyntaxError, get_library
+from django.template import (
+    InvalidTemplateLibrary, Library, TOKEN_BLOCK,
+    TemplateSyntaxError, get_library)
 from django.template.defaulttags import CommentNode, IfNode, LoadNode
 from django.template.smartif import Literal
-
 
 register = Library()
 
 
 @register.tag
 def friendly_load(parser, token):
-    '''
+    """
     Tries to load a custom template tag set. Non existing tag libraries
     are ignored.
 
-    This means that, if used in conjuction with ``if_has_tag``, you can try to
+    This means that, if used in conjunction with ``if_has_tag``, you can try to
     load the comments template tag library to enable comments even if the
     comments framework is not installed.
 
@@ -29,7 +29,7 @@ def friendly_load(parser, token):
                 {% lorem %}
             {% endif_has_tag %}
         {% endif_has_tag %}
-    '''
+    """
     bits = token.contents.split()
     for taglib in bits[1:]:
         try:
@@ -41,7 +41,7 @@ def friendly_load(parser, token):
 
 
 def do_if_has_tag(parser, token, negate=False):
-    '''
+    """
     The logic for both ``{% if_has_tag %}`` and ``{% if not_has_tag %}``.
 
     Checks if all the given tags exist (or not exist if ``negate`` is ``True``)
@@ -55,7 +55,7 @@ def do_if_has_tag(parser, token, negate=False):
           {% non_existing_tag %}
       {% endif_has_tag %}
 
-    Another example is checking a built-in tag. This will alway render the
+    Another example is checking a built-in tag. This will always render the
     current year and never FAIL::
 
       {% if_has_tag now %}
@@ -63,7 +63,7 @@ def do_if_has_tag(parser, token, negate=False):
       {% else %}
           FAIL
       {% endif_has_tag %}
-    '''
+    """
     bits = list(token.split_contents())
     if len(bits) < 2:
         raise TemplateSyntaxError("%r takes at least one arguments" % bits[0])
@@ -80,26 +80,21 @@ def do_if_has_tag(parser, token, negate=False):
         while parser.tokens:
             token = parser.next_token()
             if token.token_type == TOKEN_BLOCK and token.contents == end_tag:
-                try:
-                    return IfNode([(Literal(has_tag), nodelist_true),
-                                   (None, nodelist_false)])
-                except TypeError:  # < 1.4
-                    return IfNode(Literal(has_tag), nodelist_true,
-                                                    nodelist_false)
+                return IfNode([
+                    (Literal(has_tag), nodelist_true),
+                    (None, nodelist_false)
+                ])
             elif token.token_type == TOKEN_BLOCK and token.contents == 'else':
                 break
         nodelist_false = parser.parse((end_tag,))
-        token = parser.next_token()
-    try:
-        return IfNode([(Literal(has_tag), nodelist_true),
-                       (None, nodelist_false)])
-    except TypeError:  # < 1.4
-        return IfNode(Literal(has_tag), nodelist_true, nodelist_false)
+        parser.next_token()
+    return IfNode([(Literal(has_tag), nodelist_true),
+                   (None, nodelist_false)])
 
 
 @register.tag
 def if_has_tag(parser, token):
-    '''
+    """
     Do something if all given tags are loaded::
 
        {% load friendly_loader %}
@@ -117,13 +112,13 @@ def if_has_tag(parser, token):
        {% if_has_tag now nonexisting_tag %}
            {% now "Y" %}
        {% endif_has_tag %}
-    '''
+    """
     return do_if_has_tag(parser, token)
 
 
 @register.tag
 def ifnot_has_tag(parser, token):
-    '''
+    """
     Do something unless any given tag is loaded::
 
        {% load friendly_loader %}
@@ -142,5 +137,5 @@ def ifnot_has_tag(parser, token):
        {% ifnot_has_tag now nonexisting_tag %}
            {% now "Y" %}
        {% endifnot_has_tag %}
-    '''
+    """
     return do_if_has_tag(parser, token, True)
