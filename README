@@ -11,9 +11,6 @@ Used together you can built templates that have optional support for certain
 template tags. You can use them if they are available and do something else if
 they are not.
 
-``friendlytagloader`` has a test suite with 100% coverage and is tested
-(and passes) against Django 1.2, 1.3 & 1.4 using Python 2.5, 2.6 & 2.7.
-
 Installation
 ============
 
