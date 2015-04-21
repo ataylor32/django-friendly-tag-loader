@@ -1,6 +1,10 @@
-from django.template import (
-    InvalidTemplateLibrary, Library, TOKEN_BLOCK,
-    TemplateSyntaxError, get_library)
+from django.template import Library, TemplateSyntaxError
+try:
+    from django.template.base import (
+        get_library, InvalidTemplateLibrary, TOKEN_BLOCK)
+except ImportError:     # Django < 1.8
+    from django.template import (
+        get_library, InvalidTemplateLibrary, TOKEN_BLOCK)
 from django.template.defaulttags import CommentNode, IfNode, LoadNode, load
 from django.template.smartif import Literal
 
