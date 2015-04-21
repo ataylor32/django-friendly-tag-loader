@@ -1,5 +1,8 @@
-from django.template import (
-    Lexer, Parser, StringOrigin, Template, TemplateSyntaxError)
+from django.template import StringOrigin, Template, TemplateSyntaxError
+try:
+    from django.template.base import Lexer, Parser
+except ImportError:     # Django < 1.8
+    from django.template import Lexer, Parser
 from django.template.context import Context
 from django.test import TestCase
 
