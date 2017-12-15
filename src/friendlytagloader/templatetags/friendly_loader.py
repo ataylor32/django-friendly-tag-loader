@@ -1,11 +1,7 @@
 from django.template import Library, TemplateSyntaxError
-try:
-    from django.template.base import (
-        get_library, InvalidTemplateLibrary, TOKEN_BLOCK)
-except ImportError:     # Django < 1.8
-    from django.template import (
-        get_library, InvalidTemplateLibrary, TOKEN_BLOCK)
-from django.template.defaulttags import CommentNode, IfNode, LoadNode, load
+from django.template.base import TOKEN_BLOCK
+from django.template.defaulttags import (CommentNode, IfNode, LoadNode,
+                                         find_library, load_from_library)
 from django.template.smartif import Literal
 
 register = Library()
@@ -36,16 +32,21 @@ def friendly_load(parser, token):
     """
     bits = token.contents.split()
     if len(bits) >= 4 and bits[-2] == "from":
+        # from syntax is used; load individual tags from the library
+        name = bits[-1]
         try:
-            load(parser, token)
+            lib = find_library(parser, name)
+            subset = load_from_library(lib, name, bits[1:-2])
+            parser.add_library(subset)
         except TemplateSyntaxError:
             pass
     else:
-        for taglib in bits[1:]:
+        # one or more libraries are specified; load and add them to the parser
+        for name in bits[1:]:
             try:
-                lib = get_library(taglib)
+                lib = find_library(parser, name)
                 parser.add_library(lib)
-            except InvalidTemplateLibrary:
+            except TemplateSyntaxError:
                 pass
     return LoadNode()
 
