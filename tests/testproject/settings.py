@@ -1,9 +1,8 @@
 from os.path import dirname, join
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -22,12 +21,25 @@ DATABASES = {
 INSTALLED_APPS = (
     'testproject',
     'friendlytagloader',
-    'django.contrib.webdesign',
+    'django.contrib.sites',
+    'django.contrib.flatpages',
 )
 
-TEMPLATE_DIRS = (
-    join(dirname(__file__), 'templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [join(dirname(__file__), 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 ROOT_URLCONF = 'testproject.urls'
 

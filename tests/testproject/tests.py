@@ -1,10 +1,10 @@
-from django.template import StringOrigin, Template, TemplateSyntaxError
-try:
-    from django.template.base import Lexer, Parser
-except ImportError:     # Django < 1.8
-    from django.template import Lexer, Parser
+from django.template import Template, TemplateSyntaxError
+from django.template.base import Lexer, Parser
 from django.template.context import Context
+from django.template.engine import Engine
 from django.test import TestCase
+
+engine = Engine.get_default()
 
 
 def _render_template(template):
@@ -26,42 +26,42 @@ class FriendlyLoadingTest(TestCase):
             'Expected template to initialize')
 
     def test_can_load_taglib_using_friendly_load(self):
-        template = '{% load friendly_loader %}{% friendly_load webdesign %}'
-        lexer = Lexer(template, StringOrigin(template))
-        parser = Parser(lexer.tokenize())
+        template = '{% load friendly_loader %}{% friendly_load flatpages %}'
+        lexer = Lexer(template)
+        parser = Parser(lexer.tokenize(), engine.template_libraries, engine.template_builtins)
         parser.parse()
         self.assertTrue(
-            'lorem' in parser.tags,
-            'Expected webdesign taglib to load and provide the lorem tag')
+            'get_flatpages' in parser.tags,
+            'Expected flatpages taglib to load and provide the get_flatpages tag')
 
     def test_can_load_missing_and_existing_taglib_using_friendly_load(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load error_tags webdesign %}')
-        lexer = Lexer(template, StringOrigin(template))
-        parser = Parser(lexer.tokenize())
+            '{% friendly_load error_tags flatpages %}')
+        lexer = Lexer(template)
+        parser = Parser(lexer.tokenize(), engine.template_libraries, engine.template_builtins)
         parser.parse()
         self.assertTrue(
-            'lorem' in parser.tags,
-            'Expected webdesign taglib to load and provide the lorem tag')
+            'get_flatpages' in parser.tags,
+            'Expected flatpages taglib to load and provide the get_flatpages tag')
 
     def test_can_load_from_taglib(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load lorem from webdesign %}')
-        lexer = Lexer(template, StringOrigin(template))
-        parser = Parser(lexer.tokenize())
+            '{% friendly_load get_flatpages from flatpages %}')
+        lexer = Lexer(template)
+        parser = Parser(lexer.tokenize(), engine.template_libraries, engine.template_builtins)
         parser.parse()
         self.assertTrue(
-            'lorem' in parser.tags,
-            'Expected webdesign taglib to load and provide the lorem tag')
+            'get_flatpages' in parser.tags,
+            'Expected flatpages taglib to load and provide the get_flatpages tag')
 
     def test_can_load_from_missing_taglib(self):
         template = (
             '{% load friendly_loader %}'
             '{% friendly_load error from error_tags %}')
-        lexer = Lexer(template, StringOrigin(template))
-        parser = Parser(lexer.tokenize())
+        lexer = Lexer(template)
+        parser = Parser(lexer.tokenize(), engine.template_libraries, engine.template_builtins)
         parser.parse()
         self.assertTrue(
             isinstance(Template(template), Template),
@@ -99,29 +99,29 @@ class HasTagTest(BaseRenderTest):
 
     def test_can_test_loaded_tags(self):
         template = (
-            '{% load friendly_loader webdesign %}'
-            '{% if_has_tag lorem %}SUCCESS{% endif_has_tag %}')
+            '{% load friendly_loader flatpages %}'
+            '{% if_has_tag get_flatpages %}SUCCESS{% endif_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_friendly_loaded_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% if_has_tag lorem %}SUCCESS{% endif_has_tag %}')
+            '{% friendly_load flatpages %}'
+            '{% if_has_tag get_flatpages %}SUCCESS{% endif_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_multiple_existing_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% if_has_tag now lorem %}SUCCESS{% endif_has_tag %}')
+            '{% friendly_load flatpages %}'
+            '{% if_has_tag now get_flatpages %}SUCCESS{% endif_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_both_existing_and_missing_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% if_has_tag lorem fail %}FAIL'
+            '{% friendly_load flatpages %}'
+            '{% if_has_tag get_flatpages fail %}FAIL'
             '{% else %}SUCCESS{% endif_has_tag %}')
         self.assertSuccess(template)
 
@@ -157,32 +157,32 @@ class NotHasTagTest(BaseRenderTest):
 
     def test_can_test_loaded_tags(self):
         template = (
-            '{% load friendly_loader webdesign %}'
-            '{% ifnot_has_tag lorem %}FAIL'
+            '{% load friendly_loader flatpages %}'
+            '{% ifnot_has_tag get_flatpages %}FAIL'
             '{% else %}SUCCESS{% endifnot_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_friendly_loaded_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% ifnot_has_tag lorem %}FAIL'
+            '{% friendly_load flatpages %}'
+            '{% ifnot_has_tag get_flatpages %}FAIL'
             '{% else %}SUCCESS{% endifnot_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_multiple_existing_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% ifnot_has_tag now lorem %}FAIL'
+            '{% friendly_load flatpages %}'
+            '{% ifnot_has_tag now get_flatpages %}FAIL'
             '{% else %}SUCCESS{% endifnot_has_tag %}')
         self.assertSuccess(template)
 
     def test_can_test_both_existing_and_missing_tags(self):
         template = (
             '{% load friendly_loader %}'
-            '{% friendly_load webdesign %}'
-            '{% ifnot_has_tag lorem fail %}SUCCESS'
+            '{% friendly_load flatpages %}'
+            '{% ifnot_has_tag get_flatpages fail %}SUCCESS'
             '{% else %}FAIL{% endifnot_has_tag %}')
         self.assertSuccess(template)
 
