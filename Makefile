@@ -51,7 +51,7 @@ checkstyle:
 	python -m webbrowser -t file://$(PWD)/checkstyle.txt
 
 readme:
-	bin/rst2 html README > README.html
+	bin/rst2 html README.rst > README.html
 	python -m webbrowser -t file://$(PWD)/README.html
 
 clean:

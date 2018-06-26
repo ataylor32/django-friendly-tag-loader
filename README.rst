@@ -55,3 +55,10 @@ unavailable. For example this will render the message since, even though
   {% ifnot_has_tag now nonexisting_tag %}
     Some tags are unavailable.
   {% endifnot_has_tag %}
+
+Credits
+=======
+
+Original Author: `Jaap Roes <https://github.com/jaap3>`_ (`Bitbucket URL <https://bitbucket.org/jaap3/django-friendly-tag-loader>`_)
+
+Current Maintainer: `Adam Taylor <https://github.com/ataylor32>`_
