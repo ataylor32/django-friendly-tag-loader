@@ -59,6 +59,6 @@ unavailable. For example this will render the message since, even though
 Credits
 =======
 
-Original Author: `Jaap Roes <https://github.com/jaap3>`_ (`Bitbucket URL <https://bitbucket.org/jaap3/django-friendly-tag-loader>`_)
+Original Author: `Jaap Roes <https://github.com/jaap3>`_
 
 Current Maintainer: `Adam Taylor <https://github.com/ataylor32>`_
