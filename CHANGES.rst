@@ -1,8 +1,8 @@
 Changes
 =======
 
-Unreleased
-----------------
+1.3.1 (2018-08-14)
+------------------
 
 - Added support for Django 2.1
 
