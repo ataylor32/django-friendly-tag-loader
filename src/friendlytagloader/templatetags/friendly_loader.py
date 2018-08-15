@@ -1,5 +1,13 @@
 from django.template import Library, TemplateSyntaxError
-from django.template.base import TOKEN_BLOCK
+
+try:
+    from django.template.base import TokenType
+except ImportError:
+    # Django < 2.1
+    from django.template.base import TOKEN_BLOCK
+else:
+    TOKEN_BLOCK = TokenType.BLOCK
+
 from django.template.defaulttags import (CommentNode, IfNode, LoadNode,
                                          find_library, load_from_library)
 from django.template.smartif import Literal

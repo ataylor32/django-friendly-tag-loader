@@ -1,16 +1,16 @@
 Changes
 =======
 
-1.4 (unreleased)
+Unreleased
 ----------------
 
-- Nothing changed yet.
+- Added support for Django 2.1
 
 1.3 (2018-06-21)
 ----------------
 
 - Dropped support for Django < 1.11
-- Added support for Django >= 1.11
+- Added support for Django 1.11 and 2.0
 
 
 1.2.1 (2015-07-01)
