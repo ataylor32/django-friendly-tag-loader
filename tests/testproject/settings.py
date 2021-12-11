@@ -1,5 +1,7 @@
 from os.path import dirname, join
 
+import dj_database_url
+
 DEBUG = True
 
 MIDDLEWARE = (
@@ -12,10 +14,9 @@ MIDDLEWARE = (
 )
 
 DATABASES = {
-    "default": {
-        "ENGINE": 'django.db.backends.sqlite3',
-        "NAME": join(dirname(__file__), 'db', 'friendlytagloader.db')
-    }
+    'default': dj_database_url.config(
+        default='postgres://developer:developer@localhost:5432/django_test',
+    ),
 }
 
 INSTALLED_APPS = (
