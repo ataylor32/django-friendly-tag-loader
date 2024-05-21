@@ -1,6 +1,11 @@
 Changes
 =======
 
+Unreleased
+----------------
+
+- Added support for Django 4.1 through 5.0
+
 1.3.1 (2018-08-14)
 ------------------
 

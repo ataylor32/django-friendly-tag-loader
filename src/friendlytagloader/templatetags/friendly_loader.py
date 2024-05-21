@@ -1,4 +1,4 @@
-from django.template import Library, TemplateSyntaxError
+from django.template import Library, NodeList, TemplateSyntaxError
 
 try:
     from django.template.base import TokenType
@@ -8,8 +8,8 @@ except ImportError:
 else:
     TOKEN_BLOCK = TokenType.BLOCK
 
-from django.template.defaulttags import (CommentNode, IfNode, LoadNode,
-                                         find_library, load_from_library)
+from django.template.defaulttags import (IfNode, LoadNode, find_library,
+                                         load_from_library)
 from django.template.smartif import Literal
 
 register = Library()
@@ -89,7 +89,7 @@ def do_if_has_tag(parser, token, negate=False):
     end_tag = 'end%s' % bits[0]
     has_tag = all([tag in parser.tags for tag in bits[1:]])
     has_tag = (not negate and has_tag) or (negate and not has_tag)
-    nodelist_true = nodelist_false = CommentNode()
+    nodelist_true = nodelist_false = NodeList()
     if has_tag:
         nodelist_true = parser.parse(('else', end_tag))
         token = parser.next_token()
