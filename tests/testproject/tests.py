@@ -8,7 +8,12 @@ engine = Engine.get_default()
 
 
 def _render_template(template):
-    return Template(template).render(Context({})).strip()
+    return Template(
+        '{% extends "base.html" %}' +
+        '{% block content %}' +
+        template +
+        '{% endblock content %}'
+    ).render(Context({})).strip()
 
 
 class FriendlyLoadingTest(TestCase):

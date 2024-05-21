@@ -1,27 +1,31 @@
+{% extends "base.html" %}
+
 {% load friendly_loader %}
 {% friendly_load error_tags %}
 {% friendly_load webdesign %}
 
-{% if_has_tag lorem %}
+{% block content %}
+  {% if_has_tag lorem %}
     <p>SUCCESS</p>
     {% lorem %}
-{% else %}
+  {% else %}
     <p>FAIL</p>
-{% endif_has_tag %}
+  {% endif_has_tag %}
 
-{% if_has_tag fail %}
+  {% if_has_tag fail %}
     <p>FAIL</p>
     {% fail %}
-{% else %}
+  {% else %}
     <p>SUCCESS</p>
-{% endif_has_tag %}
+  {% endif_has_tag %}
 
-{% ifnot_has_tag now nonexisting_tag %}
+  {% ifnot_has_tag now nonexisting_tag %}
     {% now "Y" %}
-{% endifnot_has_tag %}
+  {% endifnot_has_tag %}
 
-{% if_has_tag now %}
+  {% if_has_tag now %}
     {% now "Y" %}
-{% else %}
+  {% else %}
     FAIL
-{% endif_has_tag %}
+  {% endif_has_tag %}
+{% endblock content %}
