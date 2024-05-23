@@ -1,8 +1,8 @@
 Changes
 =======
 
-Unreleased
-----------------
+1.3.2 (2024-05-22)
+------------------
 
 - Added support for Django 4.1 through 5.0
 
